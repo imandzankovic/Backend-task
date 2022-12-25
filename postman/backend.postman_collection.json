@@ -371,7 +371,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/patchTask?id=1",
+					"raw": "http://localhost:8000/api/tasks",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -379,17 +379,13 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"patchTask"
+						"tasks"
 					],
 					"query": [
 						{
 							"key": "_method",
 							"value": "POST",
 							"disabled": true
-						},
-						{
-							"key": "id",
-							"value": "1"
 						}
 					]
 				},
@@ -488,6 +484,93 @@
 					]
 				},
 				"description": "Patch tasks"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8000/api/deleteProject/1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true,
+					"connection": true,
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{BearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "taskName",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "desc",
+							"type": "text"
+						},
+						{
+							"key": "details",
+							"value": "details",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "done",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/deleteProject/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"deleteProject",
+						"1"
+					]
+				},
+				"description": "Delete Project"
 			},
 			"response": []
 		}
