@@ -20,9 +20,6 @@ class ProjectController extends Controller
         $projects=Project::all();
         $tasks=Task::all();
         $data=array();
-        if(Session::has('loginId')){
-            $data=User::where('id','=', Session::get('loginId'))->first();
-        }
         return $projects;
     }
 

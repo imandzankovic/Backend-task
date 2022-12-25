@@ -20,9 +20,6 @@ class TaskController extends Controller
         $tasks=Task::all();
         $users=User::all();
         $data=array();
-        if(Session::has('loginId')){
-            $data=User::where('id','=', Session::get('loginId'))->first();
-        }
         return $tasks;
     }
 

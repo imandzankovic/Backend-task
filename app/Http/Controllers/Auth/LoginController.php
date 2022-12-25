@@ -61,10 +61,8 @@ class LoginController extends Controller
             return response()->json(['error' => 'Unauthorizedsfwe'], 401);
         }
 
-        return Auth::guard('web')->user();
 
-        //return Auth::user();
-        //return response()->json(auth()->user());
+        return Auth::user();
           
     }
 
