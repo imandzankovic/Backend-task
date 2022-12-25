@@ -4,8 +4,6 @@ CREATE USER 'omar1234'@'localhost' IDENTIFIED BY 'password1234'; GRANT ALL PRIVI
 
 create schema 'backend'
 
-https://www.itsolutionstuff.com/post/laravel-8-crud-application-tutorial-for-beginnersexample.html https://github.com/savanihd/Laravel-8-CRUD Download and extract
-
 open with visual studio code -rename .env.example to .env
 change data in .env like this: DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_PORT=3306 DB_DATABASE=backend DB_USERNAME=omar1234 DB_PASSWORD=password1234
 
