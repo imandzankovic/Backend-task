@@ -9,6 +9,6 @@ class Task extends Model
 {
     use HasFactory;
     public function myuser(){
-        return $this->hasMany('App\userModel','id','user_id');
+        return $this->hasMany('App\Models\User','id','user_id');
     }
 }
