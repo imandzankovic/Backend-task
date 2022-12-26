@@ -102,6 +102,7 @@ class TaskController extends Controller
             return "Task is already submited";
         }
         $taskObj->details = $request->details;
+        $taskObj->done= $request->done;
         $taskObj->save();
         return $taskObj;
     }
