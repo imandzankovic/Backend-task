@@ -114,7 +114,7 @@
                                             <td>{{$o->details}}</td>
                                             <td>{{$o->myuser[0]->email}}</td>
                                             <td>{{$o->done}}</td>
-                                            @if($o->done ==0) 
+                                            @if($o->done==0 || $data->is_admin ==1) 
                                             <td><a class="btn btnMaterial btn-flat success semicircle editBtn" role="button" href="javascript:void(0)"><i class="fas fa-pen"></i></a></td>
                                             @endif
                                             @if($data->is_admin ==1) 
