@@ -17,7 +17,7 @@ use App\Http\WebControllers\TaskController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::get('/login-page', function () {
@@ -33,11 +33,14 @@ Auth::routes();
 //tasks
 Route::get('tasks', [TaskController::class, 'index'])->middleware('isLoggedIn');
 Route::post('tasks', [TaskController::class, 'store'])->middleware('isAdmin');
+Route::post('update-task/{id}', [TaskController::class, 'update'])->middleware('isAdmin');
 Route::get('tasks/{id}', [TaskController::class, 'show'])->middleware('isLoggedIn');
 Route::post('patchTask/{id}', [TaskController::class, 'patch'])->middleware('isLoggedIn');
+Route::delete('deleteTask/{id}', [TaskController::class, 'destroy'])->name('delete-task')->middleware('isAdmin'); 
 
 // //projects
 Route::get('projects',  [ProjectController::class, 'index'])->middleware('isAdmin');
 Route::get('projects/{id}', [ProjectController::class, 'show'])->middleware('isAdmin');
-Route::post('project', [ProjectController::class, 'store'])->middleware('isAdmin');
-Route::post('deleteProject/{id}', [ProjectController::class, 'destroy'])->middleware('isAdmin'); 
+Route::post('projects', [ProjectController::class, 'store'])->middleware('isAdmin');
+Route::post('update-project/{id}', [ProjectController::class, 'update'])->middleware('isAdmin');
+Route::delete('deleteProject/{id}', [ProjectController::class, 'destroy'])->name('delete-project')->middleware('isAdmin'); 

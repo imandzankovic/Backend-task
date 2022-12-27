@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Session;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -20,9 +21,7 @@ class ProjectController extends Controller
         $projects=Project::all();
         $tasks=Task::all();
         $data=array();
-        if(Session::has('loginId')){
-            $data=User::where('id','=', Session::get('loginId'))->first();
-        }
+        $data=User::where('id','=',  Auth::user()->id)->first();
         return view('showAllProjects')->with('projects', $projects)->with('tasks', $tasks)->with('data',$data);
     }
 
@@ -65,12 +64,6 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-       // $projectToShow = Project::find($id);
-       // $projectToDelete->delete();
-       // return redirect('projects/{projectToShow}');
-    //}
     public function show($id)
     {   
         $projects=Project::find($id);   
@@ -96,11 +89,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $tasks = $request->input('tasks');
         $projectObj = Project::find($id);
         $projectObj->name = $request->name;
-        // $projectObj->customer = $request->customer;
         $projectObj->description = $request->description;
-        $projectObj->task_id = $request->task_id;
+        $projectObj->task_id = $tasks[0];
         $projectObj->save();
         return redirect('projects');
     }

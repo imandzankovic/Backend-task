@@ -108,7 +108,7 @@
                                             <td><a class="btn btnMaterial btn-flat success semicircle editBtn" role="button" href="javascript:void(0)"><i class="fas fa-pen"></i></a></td>
                                             <!-- <td> <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="{{ url('projects/projectDetails', [$o->id]) }}"><i class="far fa-eye"></i></a></td> -->
                                             <td>
-                                            <form action="tasks/{{$o->id}}" method='POST'>
+                                            <form action="{{ route('delete-task', $o->id) }}" method="post">
                                              @csrf
                                              @method('DELETE')
                                              <input class="btn btnMaterial btn-flat accent btnNoBprojects checkboxHover" type="submit" class='btn btn-danger' value=''><i class="fas fa-trash btnNoBprojects" style="color: #DC3545;"></i>
@@ -202,8 +202,8 @@ $('.editBtn').click(function(e){
   $('#details').val(details);
   $('#done').val(done);
   $('#user_id').val(user);
-  $('#form').attr('action','tasks/'+id);
-  $('#form').append("<input type='hidden' name='_method' value='PUT'>")
+  $('#form').attr('action','update-task/'+id);
+//   $('#form').append("<input type='hidden' name='_method' value='PUT'>")
 
     $('#myModal').modal('show');
 

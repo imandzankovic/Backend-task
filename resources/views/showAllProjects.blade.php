@@ -121,7 +121,7 @@
                                             <td><a class="btn btnMaterial btn-flat success semicircle editBtn" role="button" href="javascript:void(0)"><i class="fas fa-pen"></i></a></td>
                                             <td> <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="{{ url('projects/projectDetails', [$o->id]) }}"><i class="far fa-eye"></i></a></td>
                                             <td>
-                                            <form action="projects/{{$o->id}}" method='POST'>
+                                            <form action="{{ route('delete-project', $o->id) }}" method="post">
                                              @csrf
                                              @method('DELETE')
                                              <input class="btn btnMaterial btn-flat accent btnNoBprojects checkboxHover" type="submit" class='btn btn-danger' value=''><i class="fas fa-trash btnNoBprojects" style="color: #DC3545;"></i>
@@ -162,10 +162,6 @@
         <label for="">Name</label>
         <input type="text" id='name' name='name' class='form-control'>
       </div>
-      <!-- <div class="form-group">
-        <label for="">Customer</label>
-        <input type="text" id='customer' name='customer' class='form-control'>
-      </div> -->
       <div class="form-group">
       <div class="form-group">
         <label for="">Description</label>
@@ -173,8 +169,6 @@
       </div>
       <div class="form-group">
         <label for="">Tasks</label>
-       
-        <!-- <select id='task_id' name='task_id' class='form-control' multiple data-live-search="true"> -->
         <select multiple="multiple" name="tasks[]" id="tasks" class='form-control' multiple data-live-search="true">
         <option value="" selected disabled>Select Task</option>
             @foreach($tasks as $pr)
@@ -199,25 +193,17 @@
 
 $('.editBtn').click(function(e){
 
-    console.log("mama",e.target.parentElement.parentElement.previousElementSibling.innerText);
+    console.log("mama", e.target.parentElement.parentElement.previousElementSibling.innerText)
 
-   task_id =e.target.parentElement.parentElement.previousElementSibling.innerText;
+     task_id =e.target.parentElement.parentElement.previousElementSibling.innerText;
      description = e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.innerText;
-    //   customer = e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
-     name=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
      id = e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
-
-     console.log("mama2",task_id);
-     console.log("mama3",description);
-     console.log("mama4",name);
-     console.log("mama5",id);
 
    $('#task_id').val(task_id);
    $('#name').val(name);
-//    $('#customer').val(customer);
    $('#description').val(description);
-  $('#form').attr('action','projects/'+id);
-  $('#form').append("<input type='hidden' name='_method' value='PUT'>")
+   $('#form').attr('action','/update-project/'+id);
+
 
     $('#myModal').modal('show');
 

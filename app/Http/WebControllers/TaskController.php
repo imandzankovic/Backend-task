@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
 use Session;
+use Auth;
 
 class TaskController extends Controller
 {
@@ -19,9 +20,7 @@ class TaskController extends Controller
         $tasks=Task::all();
         $users=User::all();
         $data=array();
-        if(Session::has('loginId')){
-            $data=User::where('id','=', Session::get('loginId'))->first();
-        }
+        $data=User::where('id','=',  Auth::user()->id)->first();
         return view('showAllTasks')->with('tasks', $tasks)->with('users', $users)->with('data', $data);
     }
 
