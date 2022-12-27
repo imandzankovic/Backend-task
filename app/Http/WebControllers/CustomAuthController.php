@@ -36,7 +36,7 @@ class CustomAuthController extends Controller
         return redirect('projects');
       }
       else{
-        return redirect('taks');
+        return redirect('tasks');
       }
    }
 

@@ -95,6 +95,20 @@ class TaskController extends Controller
         return redirect('tasks');
     }
 
+    public function patch(Request $request, $id)
+    {
+        $taskObj = Task::find($id);
+      
+        if($taskObj->done == 1){
+            //return back()->withErrors('Task is already submited');
+            return "Task is already submited";
+        }
+        $taskObj->details = $request->details;
+        $taskObj->done= $request->has('done');
+        $taskObj->save();
+        return redirect('tasks');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

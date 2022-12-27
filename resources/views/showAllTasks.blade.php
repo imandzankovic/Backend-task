@@ -74,9 +74,13 @@
                                 <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
                                     <p class="text-primary m-0 fw-bold">Tasks</p>
                                 </div>
+                            @if($data->is_admin ==1)   
                                 <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">
                                 <button class="btn btn-primary btn-sm reset" type="button" style="margin: 2px;" data-toggle="modal" data-target="#myModal">Add new tasks</button>
                               </div>
+                              @else
+                              <div></div>
+                              @endif
                             </div>
                         </div>
                         <div class="row">
@@ -91,8 +95,13 @@
                                                 <th class="text-center">Details</th>
                                                 <th class="text-center">User</th>
                                                 <th class="text-center">Done</th>
+                                                @if($data->is_admin ==1) 
                                                 <th class="text-center">Edit</th>
                                                 <th class="text-center">Delete</th>
+                                                @else
+                                                <th></th>
+                                                <th></th>
+                                                @endif
 
                                             </tr>
                                         </thead>
@@ -105,16 +114,24 @@
                                             <td>{{$o->details}}</td>
                                             <td>{{$o->myuser[0]->email}}</td>
                                             <td>{{$o->done}}</td>
+                                            @if($o->done ==0) 
                                             <td><a class="btn btnMaterial btn-flat success semicircle editBtn" role="button" href="javascript:void(0)"><i class="fas fa-pen"></i></a></td>
-                                            <!-- <td> <a class="btn btnMaterial btn-flat primary semicircle" role="button" href="{{ url('projects/projectDetails', [$o->id]) }}"><i class="far fa-eye"></i></a></td> -->
+                                            @endif
+                                            @if($data->is_admin ==1) 
                                             <td>
                                             <form action="{{ route('delete-task', $o->id) }}" method="post">
                                              @csrf
                                              @method('DELETE')
                                              <input class="btn btnMaterial btn-flat accent btnNoBprojects checkboxHover" type="submit" class='btn btn-danger' value=''><i class="fas fa-trash btnNoBprojects" style="color: #DC3545;"></i>
                                              </form>
+                                             @else
+                                              <td></td>
+                                             
+                                              @endif
                                               </tr>
+                                              
                                               @endforeach 
+                                             
                                         </tbody>
                                     </table>
                                 </div>
@@ -146,18 +163,21 @@
       
       <form action="tasks" method='POST' id='form'>
       @csrf
+      @if($data->is_admin ==1) 
       <div class="form-group">
         <label for="">Name</label>
-        <input type="text" id='name' name='name' class='form-control'>
+        <input type="text" id='name' name='name' class='form-control' >
       </div>
       <div class="form-group">
         <label for="">Description</label>
         <input type="text" id='description' name='description' class='form-control'>
       </div>
+      @endif
       <div class="form-group">
         <label for="">Details</label>
         <input type="text" id='details' name='details' class='form-control'>
       </div>
+      @if($data->is_admin ==1) 
       <div class="form-group">
         <label for="">Users</label>
        
@@ -168,6 +188,7 @@
             @endforeach
         </select>
       </div>
+      @endif
       <div class="form-group">
         <label for="">Done</label>
         <input type="checkbox" id='done' name='done'>
@@ -188,8 +209,11 @@
 <script>
 
 $('.editBtn').click(function(e){
-    console.log("mahja", e.target.parentElement.parentElement.previousElementSibling);
 
+    var user = {!! json_encode($data->toArray()) !!};
+    var o=user.is_admin == 0;
+
+    if(user.is_admin == 1){
      done=e.target.parentElement.parentElement.previousElementSibling.innerText;
      user=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.innerText;
      details=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
@@ -200,13 +224,32 @@ $('.editBtn').click(function(e){
   $('#name').val(name);
   $('#description').val(description);
   $('#details').val(details);
-  $('#done').val(done);
+  $('#done:checked').val(done);
   $('#user_id').val(user);
   $('#form').attr('action','update-task/'+id);
-//   $('#form').append("<input type='hidden' name='_method' value='PUT'>")
+
 
     $('#myModal').modal('show');
+}
+else {
+   
+     done=e.target.parentElement.parentElement.previousElementSibling.innerText;
+     user=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.innerText;
+     details=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+     description = e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+     name=e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
+     id = e.target.parentElement.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
 
+  $('#name').val(name);
+  $('#description').val(description);
+  $('#details').val(details);
+  $('#user_id').val(user);
+  $('#done:checked').val(done);
+  $('#form').attr('action','patchTask/'+id);
+
+
+    $('#myModal').modal('show');
+}
 
 })
 
